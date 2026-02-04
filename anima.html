@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Be My Valentine 💖</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+        }
+
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 6px #ff4d88;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        .buttons {
+            position: relative;
+            display: inline-block;
+        }
+
+        button {
+            padding: 14px 28px;
+            font-size: 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            margin: 0 15px;
+        }
+
+        #yesBtn {
+            background-color: #ff4d88;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #eee;
+            position: absolute;
+            left: 120px;
+        }
+
+        /* Background fixed teddies */
+        .bg-teddy {
+            position: absolute;
+            font-size: 70px;
+            opacity: 0.35;
+            z-index: 1;
+        }
+
+        .teddy1 { top: 30px; left: 30px; }
+        .teddy2 { top: 30px; right: 30px; }
+        .teddy3 { bottom: 30px; left: 30px; }
+        .teddy4 { bottom: 30px; right: 30px; }
+
+        /* Floating hearts & teddies */
+        .heart, .float-teddy {
+            position: absolute;
+            animation: floatUp linear infinite;
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .heart { font-size: 24px; }
+        .float-teddy { font-size: 34px; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.6);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fixed background teddies -->
+    <div class="bg-teddy teddy1">🧸</div>
+    <div class="bg-teddy teddy2">🧸</div>
+    <div class="bg-teddy teddy3">🧸</div>
+    <div class="bg-teddy teddy4">🧸</div>
+
+    <div class="container">
+        <h1 id="question">Will you be my Valentine? 💘🥺</h1>
+
+        <div class="buttons">
+            <button id="yesBtn" onclick="yesClicked()">Yes 💖</button>
+            <button id="noBtn" onclick="noClicked()">No 💔</button>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const messages = [
+            "Are you sure? 🥺👉👈",
+            "The teddy is watching you 🧸👀",
+            "What if I bring chocolates? 🍫",
+            "Say yes for the teddy 🧸💖",
+            "You’re breaking teddy’s heart 😭🧸",
+            "Okay now you’re teasing 😜",
+            "One cute date won’t hurt 😏",
+            "Teddy says PLEASE 🧸🥹",
+            "No again?? Teddy fainted 😵🧸",
+            "Last chance pretty please 💘"
+        ];
+
+        const noBtn = document.getElementById("noBtn");
+        const container = document.querySelector('.container');
+
+        function yesClicked() {
+            // Change question
+            document.getElementById("question").innerText =
+                "YAYYY!! 💖🥰 Teddy is happy! Happy Valentine’s Day 🧸💐";
+
+            // Hide the whole buttons container
+            document.querySelector('.buttons').style.display = 'none';
+
+            // Add cute paragraph
+            const para = document.createElement('p');
+            para.innerText = "I’m so happy you said YES! 🥰💖 You make my heart skip every beat! 💘";
+            para.style.fontSize = "22px";
+            para.style.color = "#fff";
+            para.style.textShadow = "1px 1px 4px #ff4d88";
+            para.style.marginTop = "20px";
+            container.appendChild(para);
+
+            // Add cute image
+            const img = document.createElement('img');
+            img.src = "https://i.imgur.com/1Q9Z1Zb.png"; // cute heart image
+            img.alt = "Cute love image";
+            img.style.width = "200px";
+            img.style.marginTop = "20px";
+            container.appendChild(img);
+        }
+
+        function noClicked() {
+            document.getElementById("question").innerText =
+                messages[noCount % messages.length];
+            noCount++;
+
+            // Move NO button sometimes
+            if (Math.random() < 0.6) {
+                const x = Math.random() * 200 - 100;
+                const y = Math.random() * 100 - 50;
+                noBtn.style.transform = `translate(${x}px, ${y}px)`;
+            }
+        }
+
+        // Floating hearts
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        // Floating teddy bears
+        function createFloatTeddy() {
+            const teddy = document.createElement("div");
+            teddy.className = "float-teddy";
+            teddy.innerHTML = "🧸";
+            teddy.style.left = Math.random() * 100 + "vw";
+            teddy.style.animationDuration = (Math.random() * 4 + 6) + "s";
+            document.body.appendChild(teddy);
+            setTimeout(() => teddy.remove(), 9000);
+        }
+
+        setInterval(createHeart, 400);
+        setInterval(createFloatTeddy, 1500);
+    </script>
+
+</body>
+</html>
